@@ -1,6 +1,6 @@
 import{test,expect} from '@playwright/test';
 
-test('payment page',async({page})=>{
+test('verify order page',async({page})=>{
 await page.goto('https://rahulshettyacademy.com/client');
 //enter Email
 await page.locator('#userEmail').fill("anu11@gmail.com");
@@ -89,13 +89,42 @@ await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order.
 const itemName = await page.locator('.line-item .title').nth(0).textContent();
 console.log("Item name " +itemName);
 
-expect(page.locator('.line-item .title').nth(0)).toHaveText('iphone 13 pro');
+await expect( page.locator('.line-item .title').nth(0)).toHaveText('iphone 13 pro');
 
 //Order id | 69dde16df86ba51a65631e49 |
 
+const ORDERIDNumber = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
+console.log("Order ID number " +ORDERIDNumber); 
+
+await page.locator('button:has-text("ORDERS")').click()
+await page.locator('tbody').first().waitFor();
+//verify you are in MyOrders Page
+
+const Orders = await page.locator("text=Your Orders").textContent();
+console.log("Order page " +Orders);
+await expect( page.locator("text=Your Orders")).toBeVisible();
+
+//Search in the table
+
+const table = await page.locator('tbody tr');
+const countRow = await page.locator('tbody tr').count();
+for(let i=0;i<countRow;i++){
+    const rowsOrder = await table.nth(i).locator('th').textContent()
+        if(ORDERIDNumber.trim().includes(rowsOrder)){
+            await table.nth(i).locator("button").first().click();
+            break;
 
 
-await page.pause();
+        }
+        
+    }
+
+
+    const orderDetails = await page.locator('.col-md-6 .col-text').textContent();
+    console.log("Order Deatils Number " +orderDetails);
+
+
+
 
 
 
