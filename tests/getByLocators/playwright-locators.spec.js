@@ -16,7 +16,7 @@ test('Playwright Special Locator' , async({page}) => {
 // look for all the products and add one
 
    await page.locator('app-card').filter({hasText: "Nokia Edge"}).getByRole("button").click();
-    await page.pause();
+    
 
 
 });

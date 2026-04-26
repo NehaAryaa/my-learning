@@ -37,10 +37,9 @@ test('Playwright Special Locator' , async({page}) => {
 
 // COnfirmation order
 
-await expect(page.getByText(" Thankyou for the order. ")).toBeVisible();
+await expect(page.getByText(" Thankyou for the . ")).toBeVisible();
 
 
-    await page.pause();
 
 
 
